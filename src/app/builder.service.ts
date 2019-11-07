@@ -1,13 +1,13 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import * as builder from 'devextreme-themebuilder';
-import { version } from 'devextreme-themebuilder/package.json';
+import {version} from 'devextreme-themebuilder/package.json';
 import * as lessCompiler from 'less/lib/less-browser';
 import * as Sass from 'sass.js/dist/sass.js';
 import semver from 'semver';
-import { BuilderResult } from './types/builder-result';
-import { ExportedItem } from './types/exported-item';
-import { Theme } from './types/theme';
+import {BuilderResult} from './types/builder-result';
+import {ExportedItem} from './types/exported-item';
+import {Theme} from './types/theme';
 
 @Injectable()
 export class BuilderService {
@@ -16,13 +16,13 @@ export class BuilderService {
 
     constructor(private http: HttpClient) {
         this.loadLess = (fileName: string): Promise<string> => {
-            return this.http.get(fileName, { responseType: 'text' })
+            return this.http.get(fileName, {responseType: 'text'})
                 .toPromise();
         };
 
-        const compilerOptions = { math: 'always', useFileCache: true };
+        const compilerOptions = {math: 'always', useFileCache: true};
 
-        if(semver.gte(version, '19.2.0-dev')) {
+        if (semver.gte(version, '19.2.0-dev')) {
             compilerOptions['filename'] = document.baseURI + 'devextreme-themebuilder/data/less/bundles/bundle.less'; // fake path to the bundle
         }
 
@@ -37,7 +37,7 @@ export class BuilderService {
             return new Promise((resolve, reject): void => {
                 sass.compile(scss, (result) => {
                     const SUCCESS_STATUS = 0;
-                    if(result.status === SUCCESS_STATUS) {
+                    if (result.status === SUCCESS_STATUS) {
                         resolve(result.text);
                     } else {
                         reject(result);
@@ -55,7 +55,7 @@ export class BuilderService {
             baseTheme: theme.name + '.' + theme.colorScheme.replace(/-/g, '.')
         };
 
-        const extendedConfig = { ...baseConfig, ...config };
+        const extendedConfig = {...baseConfig, ...config};
         return builder.buildTheme(extendedConfig);
     }
 

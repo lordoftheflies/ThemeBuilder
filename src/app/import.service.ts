@@ -1,12 +1,14 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import {EventEmitter, Injectable} from '@angular/core';
+import {Router} from '@angular/router';
 import * as normalize from 'devextreme-themebuilder/modules/config-normalizer';
-import { MetadataRepositoryService } from './meta-repository.service';
+import {MetadataRepositoryService} from './meta-repository.service';
 
 @Injectable()
 export class ImportService {
 
-    constructor(private metaRepository: MetadataRepositoryService, private route: Router) { }
+    constructor(private metaRepository: MetadataRepositoryService, private route: Router) {
+    }
+
     private savedMetadata: any = {};
     private normalizedMetadata: any = {};
     changed = new EventEmitter();
@@ -26,7 +28,7 @@ export class ImportService {
             return new Promise((_, reject): void => reject());
         }
 
-        this.normalizedMetadata = { ...this.savedMetadata };
+        this.normalizedMetadata = {...this.savedMetadata};
         normalize(this.normalizedMetadata);
 
         return this.metaRepository.import({

@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
 import * as baseParameters from 'devextreme-themebuilder/modules/base-parameters';
 import * as MetadataLoader from 'devextreme-themebuilder/modules/metadata-loader';
 import * as MetadataRepository from 'devextreme-themebuilder/modules/metadata-repository';
 import * as themes from 'devextreme-themebuilder/modules/themes';
-import { BehaviorSubject } from 'rxjs';
-import { BuilderService } from './builder.service';
-import { LoadingService } from './loading.service';
-import { BuilderResult } from './types/builder-result';
-import { ExportedItem } from './types/exported-item';
-import { MetaItem } from './types/meta-item';
-import { Theme } from './types/theme';
+import {BehaviorSubject} from 'rxjs';
+import {BuilderService} from './builder.service';
+import {LoadingService} from './loading.service';
+import {BuilderResult} from './types/builder-result';
+import {ExportedItem} from './types/exported-item';
+import {MetaItem} from './types/meta-item';
+import {Theme} from './types/theme';
 
 @Injectable()
 export class MetadataRepositoryService {
@@ -19,7 +19,7 @@ export class MetadataRepositoryService {
     private metadataPromise: Promise<any>;
     private modifiedMetaCollection: ExportedItem[] = [];
 
-    theme: Theme = { name: 'generic', colorScheme: 'light' };
+    theme: Theme = {name: 'generic', colorScheme: 'light'};
     css = new BehaviorSubject<string>('');
     forceRebuild = false;
     globalBuildNumber = 0;
@@ -30,24 +30,24 @@ export class MetadataRepositoryService {
         const repositoryPromise = this.metadataRepository.init(themes);
 
         this.router.events.subscribe((event) => {
-            if(!(event instanceof NavigationEnd)) return;
+            if (!(event instanceof NavigationEnd)) return;
             const urlParts = event.url.split('/');
             const THEME_POSITION = 2;
             const COLOR_SCHEME_POSITION = 3;
             const themeName = urlParts[THEME_POSITION];
             const colorScheme = urlParts[COLOR_SCHEME_POSITION];
 
-            if(!colorScheme && this.modifiedMetaCollection.length) {
+            if (!colorScheme && this.modifiedMetaCollection.length) {
                 this.forceRebuild = true;
             }
 
-            if(themeName && colorScheme) {
-                if(this.theme.name !== themeName ||
+            if (themeName && colorScheme) {
+                if (this.theme.name !== themeName ||
                     this.theme.colorScheme !== colorScheme ||
                     this.forceRebuild
                 ) {
                     this.forceRebuild = false;
-                    this.theme = { name: themeName, colorScheme };
+                    this.theme = {name: themeName, colorScheme};
                     this.clearModifiedDataCache();
                     this.build();
                 }
@@ -75,19 +75,19 @@ export class MetadataRepositoryService {
 
     updateSingleVariable(e: any, key: string): void {
         this.getDataItemByKey(key).then((dataItem) => {
-            if(dataItem.Value === e.value) {
+            if (dataItem.Value === e.value) {
                 return;
             }
 
             dataItem.Value = e.value;
 
-            if(e.previousValue === undefined) {
+            if (e.previousValue === undefined) {
                 return;
             }
 
             this.modifiedMetaCollection = this.modifiedMetaCollection.filter((item) => item.key !== dataItem.Key);
 
-            this.modifiedMetaCollection.push({ key: dataItem.Key, value: dataItem.Value });
+            this.modifiedMetaCollection.push({key: dataItem.Key, value: dataItem.Value});
 
             this.build();
         });
@@ -106,19 +106,19 @@ export class MetadataRepositoryService {
         return buildResult.then((result) => {
             this.loading.hide();
 
-            if(savedBuildNumber !== this.globalBuildNumber) return;
+            if (savedBuildNumber !== this.globalBuildNumber) return;
 
-            for(const dataKey in result.compiledMetadata) {
-                if(Object.prototype.hasOwnProperty.call(result.compiledMetadata, dataKey)) {
+            for (const dataKey in result.compiledMetadata) {
+                if (Object.prototype.hasOwnProperty.call(result.compiledMetadata, dataKey)) {
                     const item = this.metadataRepository.getDataItemByKey(dataKey, currentTheme);
                     item.Value = result.compiledMetadata[dataKey];
                 }
             }
 
-            if(isFirstBootstrapBuild) {
-                for(const dataKey in result.modifyVars) {
-                    if(Object.prototype.hasOwnProperty.call(result.modifyVars, dataKey)) {
-                        this.modifiedMetaCollection.push({ key: dataKey, value: result.modifyVars[dataKey] });
+            if (isFirstBootstrapBuild) {
+                for (const dataKey in result.modifyVars) {
+                    if (Object.prototype.hasOwnProperty.call(result.modifyVars, dataKey)) {
+                        this.modifiedMetaCollection.push({key: dataKey, value: result.modifyVars[dataKey]});
                     }
                 }
             }
@@ -135,7 +135,7 @@ export class MetadataRepositoryService {
 
             themeData.forEach((item) => {
                 const index = baseParameters.indexOf(item.Key);
-                if(index >= 0) result[index] = item;
+                if (index >= 0) result[index] = item;
             });
 
             return result;

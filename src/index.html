@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DevExtreme ThemeBuilder</title>
+    <title>Plutonium Theme Assembler</title>
     <base href="/">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="content/css/dx.common.css" />
+    <link rel="stylesheet" type="text/css" href="content/css/dx.common.css"/>
 
     <script>
         function isIframe() {
@@ -23,26 +23,27 @@
         }
     </script>
 
-    <!-- Google Tag Manager -->
+    <!-- <editor-fold desc="Google Tag Manager"> -->
     <script>
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
             var f = d.getElementsByTagName(s)[0],
                 j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l='+l : '';
+                dl = l != 'dataLayer' ? '&l=' + l : '';
             j.async = true;
             j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-WQWSD3L');
     </script>
-    <!-- End Google Tag Manager -->
+    <!-- </editor-fold desc="Google Tag Manager"> -->
 
-    <!-- Google Tag Manager (noscript) -->
+    <!-- <editor-fold desc="Google Tag Manager (noscript)"> -->
     <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQWSD3L" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQWSD3L" height="0" width="0"
+                style="display:none;visibility:hidden"></iframe>
     </noscript>
-    <!-- End Google Tag Manager (noscript) -->
+    <!-- </editor-fold desc="Google Tag Manager (noscript)"> -->
 
     <style>
         body {
@@ -53,41 +54,118 @@
             display: none;
         }
 
-        .loading {
-            text-align: center;
-            width: 100%;
+        /* <editor-fold desc="Main spinner style"> */
+
+        .small,
+        .lds-ring.small div {
+            width: 16px;
+            height: 16px;
+        }
+
+        .medium,
+        .lds-ring.medium div {
+            width: 64px;
+            height: 64px;
+        }
+
+        .large,
+        .lds-ring.large div {
+            width: 128px;
+            height: 128px;
+        }
+
+        .lds-ring {
+            display: inline-block;
+            position: relative;
+            width: 64px;
+            height: 64px;
+        }
+
+        .lds-ring div {
+            box-sizing: border-box;
+            display: inline-block;
             position: absolute;
-            top: 50%;
-            margin-top: -136px;
-            height: 272px;
+            width: 51px;
+            height: 51px;
+            margin: 6px;
+            border: 6px solid #cef;
+            border-radius: 50%;
+            animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            border-color: red transparent transparent transparent;
         }
 
-        .loading img {
-            transition-property: transform;
-            backface-visibility: hidden;
-            animation: rotate 2s linear infinite;
-            transform-origin: 50% 50%;
-            will-change: transform;
+        .lds-ring div:nth-child(1) {
+            animation-delay: -0.45s;
         }
 
-        @keyframes rotate {
+        .lds-ring div:nth-child(2) {
+            animation-delay: -0.3s;
+        }
+
+        .lds-ring div:nth-child(3) {
+            animation-delay: -0.15s;
+        }
+
+        @keyframes lds-ring {
+            0% {
+                transform: rotate(0deg);
+            }
             100% {
-                transform:rotate(-360deg);
+                transform: rotate(360deg);
             }
         }
+
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* </editor-fold desc="Main spinner style"> */
+
+        /*.loading {*/
+        /*    text-align: center;*/
+        /*    width: 100%;*/
+        /*    position: absolute;*/
+        /*    top: 50%;*/
+        /*    margin-top: -136px;*/
+        /*    height: 272px;*/
+        /*}*/
+
+        /*.loading img {*/
+        /*    transition-property: transform;*/
+        /*    backface-visibility: hidden;*/
+        /*    animation: rotate 2s linear infinite;*/
+        /*    transform-origin: 50% 50%;*/
+        /*    will-change: transform;*/
+        /*}*/
+
+        /*@keyframes rotate {*/
+        /*    100% {*/
+        /*        transform:rotate(-360deg);*/
+        /*    }*/
+        /*}*/
     </style>
 </head>
 
 <body>
-    <script>
-        if(isIframe()) {
-            document.body.classList.add("hide-loading");
-        }
-    </script>
-    <app-root>
-        <div class="loading">
-            <img src="images/loading.svg" alt="loading..." />
-        </div>
-    </app-root>
+<script>
+    if(isIframe()) {
+        document.body.classList.add("hide-loading");
+    }
+</script>
+<app-root>
+    <!--        <div class="loading">-->
+    <div id="spinner" class="lds-ring centered large loading">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <!--            </div>-->
+
+        <!--            <img src="images/loading.svg" alt="loading..." />-->
+    </div>
+</app-root>
 </body>
 </html>

@@ -1,14 +1,45 @@
 {
-    "name": "devextreme-themebuilder-app",
-    "version": "0.0.0",
+    "name": "plutonium-theme-assembler",
+    "version": "0.0.1",
+    "keywords": [
+        "nodejs",
+        "angular",
+        "theme",
+        "application",
+        "tool"
+    ],
+    "author": "László Hegedűs",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve",
-        "build": "ng build --prod --baseHref=https://devexpress.github.io/ThemeBuilder/",
+        "build": "npm run env -s && ng build --prod --baseHref=https://pages.gitlab.org/plutonium-theme-assembler/",
+        "start": "npm run env -s && cross-env NODE_OPTIONS='--max-http-header-size=65536' && ng serve",
+        "lint": "ng lint && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc && eslint src/**/*.ts",
         "lint-fix": "eslint --fix src/**/*.ts",
-        "lint": "eslint src/**/*.ts"
+        "test": "npm run env -s && ng test --code-coverage",
+        "test:ci": "npm run env -s && ng test --code-coverage --watch=false",
+        "e2e": "npm run env -s && ng e2e",
+        "translations:extract": "ngx-translate-extract --input ./src --output ./src/translations/hu-HU.json --format=namespaced-json --clean --sort --replace false --marker extract",
+        "docs": "hads ./docs -o",
+        "env": "ngx-scripts env npm_package_version",
+        "prettier:check": "prettier --config .prettierrc --list-different \"./{src,e2e}/**/*.{ts,js,scss}\"",
+        "prettier": "prettier --config .prettierrc --write \"./{src,e2e}/**/*.{ts,js,scss}\"",
+        "postinstall": "npm run prettier -s",
+        "precommit": "pretty-quick --config .prettierrc --staged",
+        "generate": "ng generate",
+        "swagger": "ng-swagger-gen -c swagger-config.json"
     },
     "private": true,
+    "license": "Apache 2.0",
+    "husky": {
+        "hooks": {
+            "pre-commit": "echo 'Pre-commit hook...' && npm run precommit"
+        }
+    },
+    "publishConfig": {
+        "registry": "https://nexus.cherubits.hu/repository/npm-internal/"
+    },
+
+
     "dependencies": {
         "@angular/animations": "^7.2.8",
         "@angular/common": "^7.2.8",

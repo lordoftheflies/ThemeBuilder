@@ -47,7 +47,7 @@ export class TreeviewComponent {
                     id: 14,
                     text: 'Mobile (HTML JS)',
                     items: [
-                        { id: 141, text: 'DevExtreme' }
+                        { id: 141, text: 'Ch' }
                     ]
                 },
                 {

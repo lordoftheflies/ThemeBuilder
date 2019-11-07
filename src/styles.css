@@ -2,8 +2,8 @@
     font-family: "OpenSansCondensedBold";
     src: url("./content/fonts/OpenSansCondensedBold.eot");
     src: url("./content/fonts/OpenSansCondensedBold.eot?#iefix") format("embedded-opentype"),
-         url("./content/fonts/OpenSansCondensedBold.woff") format("woff"),
-         url("./content/fonts/OpenSansCondensedBold.ttf") format("truetype");
+    url("./content/fonts/OpenSansCondensedBold.woff") format("woff"),
+    url("./content/fonts/OpenSansCondensedBold.ttf") format("truetype");
     font-style: normal;
     font-weight: normal;
 }
@@ -27,14 +27,26 @@ body {
     outline: none;
 }
 
-@media (min-height: 1000px) { 
+@media (min-height: 1000px) {
     body {
         overflow-y: hidden;
     }
 }
 
-@media (min-width: 1000px) { 
+@media (min-width: 1000px) {
     body {
         overflow-x: hidden;
     }
+}
+
+.circle {
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+    text-align: center;
+    color: #555;
+    border-radius: 50%;
+    background: #ddd;
+    font-size: 30px;
+    line-height: 64px;
 }
